@@ -21,17 +21,20 @@ What is included:
 
 ## Running
 
-From the repository:
+Exo needs [IgnisLua](https://github.com/sysv86/IgnisLua) — the shell is a
+configuration, the framework runs it. Clone both side by side, then:
 
 ```bash
-./bin/ignis-bin init -c exo/config.lua      # native launcher
-lua5.5 bin/ignis init -c exo/config.lua     # or through the Lua CLI
+# from the IgnisLua checkout, pointing at this config
+./bin/ignis-bin init -c ../Exo/config.lua
+lua5.5 bin/ignis init -c ../Exo/config.lua   # or through the Lua CLI
 ```
 
-Installed as a user configuration:
+Or install the config as a user configuration and run it from anywhere:
 
 ```bash
-./scripts/install_exo.sh                    # copies exo/ to ~/.config/ignis-lua
+./scripts/install_exo.sh                     # IgnisLua helper: copies this
+                                             # directory to ~/.config/ignis-lua
 ignis init -c ~/.config/ignis-lua/config.lua
 ```
 

@@ -1,0 +1,62 @@
+-- exo/styles/static-themes.scss
+/* Swatches and layout for the static themes in exo/themes/landroid.lua.
+   Swatches are literal colours: they must render before a theme is applied. */
+
+@use "../colors.scss";
+
+.landroid-dark-main {
+    .primary { background-color: #89b6f4; }
+    .secondary { background-color: #abadf5; }
+    .tertiary { background-color: #00c8c0; }
+}
+
+.landroid-dark-soft {
+    .primary { background-color: #94b6e7; }
+    .secondary { background-color: #aeafe7; }
+    .tertiary { background-color: #00cac1; }
+}
+
+.landroid-dark-contrast {
+    .primary { background-color: #aecefd; }
+    .secondary { background-color: #c8c7fd; }
+    .tertiary { background-color: #00e4da; }
+}
+
+.landroid-light-main {
+    .primary { background-color: #174daf; }
+    .secondary { background-color: #5628c6; }
+    .tertiary { background-color: #00635f; }
+}
+
+.landroid-light-soft {
+    .primary { background-color: #2754a7; }
+    .secondary { background-color: #583abb; }
+    .tertiary { background-color: #006763; }
+}
+
+.landroid-light-contrast {
+    .primary { background-color: #033389; }
+    .secondary { background-color: #3e0a9a; }
+    .tertiary { background-color: #004643; }
+}
+
+/* The "+" tile and its theme list (settings/tabs/appearance.lua). */
+.static-theme-preview {
+    label.m3-icon {
+        font-size: 20pt;
+    }
+}
+
+.static-theme-list {
+    padding: 6px;
+}
+
+.static-theme-row {
+    padding: 2px;
+    border-radius: 14px;
+
+    &.selected {
+        outline: 2px solid colors.$primary;
+        outline-offset: -2px;
+    }
+}

@@ -16,6 +16,8 @@ What is included:
 - notification cards, popups and history
 - OSD, power menu, screen and shell corner overlays
 - Material 3 Expressive component set and showcase window
+- static themes (`themes/landroid.lua`, six Landroid variants) that colour the
+  whole shell without a wallpaper or `matugen`
 - settings window with seven tabs (appearance, quick, bar, launcher, network,
   Bluetooth, services)
 
@@ -92,7 +94,7 @@ Optional, with graceful degradation when absent:
 
 | Tool | Used for | Without it |
 | --- | --- | --- |
-| `matugen` | wallpaper-driven colour schemes | the bundled `colors.scss` palette is used; the wallpaper and colour pages in Settings do nothing |
+| `matugen` | wallpaper-driven colour schemes | the bundled `colors.scss` palette is used and the static themes in Settings → Appearance still work |
 | `swww` | setting the wallpaper | `matugen` still regenerates colours |
 | `gpu-screen-recorder` | screen recording | the recorder reports "No recorder" |
 | `slurp` | region recording | region recording reports a missing dependency |

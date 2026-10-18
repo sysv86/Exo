@@ -13,6 +13,7 @@ local user_settings = options.OptionsManager({
                 quickselect_path = "",
                 wallpaper_path = "",
                 color_scheme = "expressive",
+                static_theme = "",
                 dark_mode = true,
                 auto_dark = Group({
                     enabled = false,

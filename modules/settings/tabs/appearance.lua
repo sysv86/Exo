@@ -124,6 +124,8 @@ function ColorCategory.new()
     local self = setmetatable({}, ColorCategory)
     self.palettes = PALETTES
     self.palette_buttons = {}
+    self.static_theme_buttons = {}
+    self.static_button = nil
     self.theme_buttons = {}
 
     self.box = widgets.Box({
@@ -142,6 +144,8 @@ function ColorCategory.new()
     })
 
     local function on_palette_selected(palette_name)
+        -- picking a matugen palette releases a pinned static theme
+        user_settings.appearance.wallcolors.static_theme = ""
         Wallpaper.set_colors(palette_name)
         user_settings.appearance.wallcolors.color_scheme = palette_name
         self:_update_palette_selection()
@@ -202,6 +206,100 @@ function ColorCategory.new()
         local btn = make_palette_button(palette_name)
         self.palette_buttons[#self.palette_buttons + 1] = btn
         palette_selector_row:append(btn)
+    end
+
+    -- Static themes (Landroid, see exo/themes/landroid.lua). The tile with the
+    -- "+" icon opens the list; picking a theme writes the colour sheet directly
+    -- through Wallpaper.set_static_theme() -- no matugen, no wallpaper.
+    local static_themes = Wallpaper.get_static_themes()
+    if #static_themes > 0 then
+        local list = widgets.Box({ vertical = true, spacing = 4, css_classes = { "static-theme-list" } })
+        local popover = Gtk.Popover()
+        popover:set_child(list)
+
+        local function swatch(theme)
+            return widgets.Box({
+                css_classes = { "preview", theme.id },
+                vertical = true,
+                height_request = 50,
+                width_request = 50,
+                halign = "center",
+                hexpand = false,
+                valign = "center",
+                vexpand = false,
+                overflow = "hidden",
+                child = {
+                    widgets.Box({
+                        css_classes = { "primary" },
+                        height_request = 25,
+                        width_request = 50,
+                        hexpand = false,
+                        halign = "start",
+                    }),
+                    widgets.Box({
+                        vertical = false,
+                        child = {
+                            widgets.Box({
+                                css_classes = { "secondary" },
+                                height_request = 25,
+                                width_request = 25,
+                            }),
+                            widgets.Box({
+                                css_classes = { "tertiary" },
+                                height_request = 25,
+                                width_request = 25,
+                            }),
+                        },
+                    }),
+                },
+            })
+        end
+
+        for _, theme in ipairs(static_themes) do
+            local row = widgets.Button({
+                on_click = function()
+                    if Wallpaper.set_static_theme(theme.id) then
+                        popover:popdown()
+                        self:_update_palette_selection()
+                    end
+                end,
+                css_classes = { "static-theme-row" },
+                child = widgets.Box({
+                    vertical = false,
+                    spacing = 10,
+                    child = {
+                        swatch(theme),
+                        widgets.Label({ label = theme.label, halign = "start", hexpand = true }),
+                    },
+                }),
+            })
+            row.theme_id = theme.id
+            self.static_theme_buttons[#self.static_theme_buttons + 1] = row
+            list:append(row)
+        end
+
+        local add_btn = widgets.Button({
+            on_click = function()
+                popover:popup()
+            end,
+            css_classes = { "palette-preview-btn" },
+            hexpand = true,
+            halign = "fill",
+            tooltip_text = "Static themes",
+            child = widgets.Box({
+                css_classes = { "preview", "static-theme-preview" },
+                height_request = 50,
+                width_request = 50,
+                halign = "center",
+                valign = "center",
+                child = {
+                    widgets.Label({ css_classes = { "m3-icon" }, label = "add" }),
+                },
+            }),
+        })
+        self.static_button = add_btn
+        popover:set_parent(add_btn)
+        palette_selector_row:append(add_btn)
     end
 
     local theme_selector_row = widgets.Box({
@@ -355,11 +453,28 @@ end
 
 function ColorCategory:_update_palette_selection()
     local selected_palette = tostring(user_settings.appearance.wallcolors.color_scheme or ""):gsub("_", "-")
+    local selected_static = user_settings.appearance.wallcolors.static_theme
+    if selected_static == "" then selected_static = nil end
     for _, btn in ipairs(self.palette_buttons) do
-        if btn.palette_name == selected_palette then
+        if not selected_static and btn.palette_name == selected_palette then
             btn:add_css_class("selected")
         else
             btn:remove_css_class("selected")
+        end
+    end
+
+    if self.static_button then
+        if selected_static then
+            self.static_button:add_css_class("selected")
+        else
+            self.static_button:remove_css_class("selected")
+        end
+    end
+    for _, row in ipairs(self.static_theme_buttons or {}) do
+        if selected_static and row.theme_id == selected_static then
+            row:add_css_class("selected")
+        else
+            row:remove_css_class("selected")
         end
     end
 end

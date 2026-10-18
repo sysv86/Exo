@@ -10,6 +10,12 @@ function M.auto_dark()
         return
     end
 
+    -- A static theme pins its own light/dark variant; do not overwrite it.
+    local static_theme = user_settings.appearance.wallcolors.static_theme
+    if static_theme and static_theme ~= "" then
+        return
+    end
+
     local now = os.date("*t")
     local current = now.hour * 60 + now.min
     local start_time = math.floor(options.start_hour) * 60 + math.floor(options.start_min)

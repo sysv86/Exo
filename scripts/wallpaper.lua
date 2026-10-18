@@ -196,6 +196,8 @@ function Wallpaper.set_colors(color_scheme)
     local path = user_settings.appearance.wallcolors.wallpaper_path
     local resolved_scheme = normalize_scheme(color_scheme)
     user_settings.appearance.wallcolors.color_scheme = resolved_scheme
+    -- a matugen palette replaces any pinned static theme
+    user_settings.appearance.wallcolors.static_theme = ""
 
     run_matugen(path, resolved_scheme, current_mode(), function()
         Wallpaper.generate_previews(false)
@@ -242,10 +244,61 @@ function Wallpaper.set_dark_mode(active)
     end
 end
 
+--- Applies a static (wallpaper-independent) theme from `exo/themes/landroid.lua`:
+--- writes the colour sheet and reloads the CSS. `matugen` is not involved, so
+--- the theme survives until another wallpaper/scheme action is taken.
+---@param theme_id string
+---@return boolean applied
+function Wallpaper.set_static_theme(theme_id)
+    local landroid = require("themes.landroid")
+    local theme = landroid.get(theme_id)
+    if not theme then return false end
+
+    local applied = write_colors_scss(landroid.tokens(theme), theme.image or "")
+    if not applied then return false end
+
+    user_settings.appearance.wallcolors.static_theme = theme_id
+    user_settings.appearance.wallcolors.dark_mode = (theme.mode == "dark")
+
+    local is_light = (theme.mode == "light")
+    if is_light then
+        if not css_manager:get_css_info_by_name("lightthemeoverrides") then
+            css_manager:apply_css(ignis.CssInfoPath({
+                name = "lightthemeoverrides",
+                path = paths.STYLES_DIR .. "/lightthemeoverrides.scss",
+                compiler_function = function(p)
+                    return utils.sass_compile({ path = p })
+                end,
+                priority = "user",
+            }))
+        end
+    elseif css_manager:get_css_info_by_name("lightthemeoverrides") then
+        css_manager:remove_css("lightthemeoverrides")
+    end
+
+    utils.exec_sh_async(string.format(
+        "gsettings set org.gnome.desktop.interface color-scheme 'prefer-%s' 2>/dev/null", theme.mode))
+
+    css_manager:reload_all_css()
+    return true
+end
+
+--- The static themes offered in the Appearance tab.
+---@return table[]
+function Wallpaper.get_static_themes()
+    return require("themes.landroid").list()
+end
+
 --- Applies the stored palette and light/dark theme from shipped palettes.
 ---@return boolean applied
 function Wallpaper.sync_colors()
     local wallcolors = user_settings.appearance.wallcolors
+    -- A pinned static theme owns the colour sheet: re-apply it instead of the
+    -- wallpaper/shipped palette, otherwise the next start would overwrite it.
+    local static_theme = wallcolors.static_theme
+    if static_theme and static_theme ~= "" then
+        return Wallpaper.set_static_theme(static_theme)
+    end
     if have_program("matugen") and wallcolors.wallpaper_path ~= "" then
         run_matugen(wallcolors.wallpaper_path, wallcolors.color_scheme, current_mode(), nil)
         return true

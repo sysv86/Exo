@@ -479,7 +479,15 @@ function Launcher.new()
         key_controller:set_propagation_phase(Gtk.PropagationPhase.CAPTURE)
     end
     key_controller.on_key_pressed = function(_, keyval, _, state)
-        local ctrl = state and Gdk.ModifierType and ((state & Gdk.ModifierType.CONTROL_MASK) ~= 0)
+        -- LuaGObject hands GdkModifierType to signal callbacks as a table in
+        -- this build, so `state & CONTROL_MASK` raised "attempt to perform
+        -- bitwise operation on a table value" and killed every key this
+        -- controller handles (Escape / arrows / Tab / Enter never returned
+        -- true). Only use the numeric form when it actually is one.
+        local ctrl = false
+        if type(state) == "number" and Gdk.ModifierType then
+            ctrl = (state & Gdk.ModifierType.CONTROL_MASK) ~= 0
+        end
         if keyval == Gdk.KEY_Escape or keyval == 65307 then
             self:close_launcher()
             return true

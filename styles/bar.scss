@@ -157,7 +157,6 @@
     margin: 0px 10px;
 }
 
-// --- POOLED WORKSPACES ISLAND (PURE GEOMETRY MORPH, ZERO BLURRY SCALE) ---
 .workspaces {
     background-color: $surfaceContainerLow;
     padding: 3px 6px;
@@ -279,7 +278,6 @@
     }
 }
 
-// --- DEVELOPER WINDOW INFO (CLASS + PID + TITLE + FLOATING BADGE) ---
 .winfo {
     padding: 0px 12px 0px 10px;
     @include m3-expressive-transition($dur-fast, $m3-spring-fast);
@@ -309,7 +307,6 @@
     }
 }
 
-// --- CLOCK & DATE (TABULAR NUMS) ---
 .clock {
     padding: 0px 12px;
     min-height: 0px;
@@ -337,7 +334,6 @@
     }
 }
 
-// --- MEDIA PILL ---
 .media {
     @include m3-expressive-transition($dur-fast, $m3-spring-fast);
     padding: 0px 12px 0px 6px;
@@ -402,7 +398,6 @@
     }
 }
 
-// --- SYSTEM TRAY, C11 TELEMETRY CHIP & KEYBOARD LAYOUT SWITCHER ---
 .tray {
     padding: 0px 6px;
     min-width: 14px;
@@ -504,6 +499,7 @@
     &:hover {
     }
 
+    * {
         background-color: transparent;
     }
 }
@@ -603,7 +599,6 @@
     }
 }
 
-// --- TASKBAR IN BAR ---
 .tasks {
     padding: 0px 6px;
 
@@ -669,7 +664,6 @@
     }
 }
 
-// --- VERTICAL BAR ---
 .vertical {
     &.module-backgrounds {
         .left-widgets,

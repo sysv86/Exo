@@ -11,6 +11,7 @@
 @use "osd.scss";
 @use "previews.scss";
 
+* {
     outline: unset;
     border: unset;
     background: unset;
@@ -21,6 +22,7 @@
     -gtk-secondary-caret-color: $primary;
 }
 
+*:focus {
     outline-color: $secondary;
 }
 

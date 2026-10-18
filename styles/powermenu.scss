@@ -1,0 +1,86 @@
+@use "../colors.scss" as *;
+@use "m3.scss" as *;
+
+
+.powermenu {
+    @include m3-expressive-transition($dur-slow, $m3-spring-default);
+    background-color: rgba($surfaceContainerLowest, 0.96);
+    border: 1px solid rgba($outlineVariant, 0.40);
+    padding: 16px;
+    border-radius: $shape-2xl;
+    box-shadow: $elevation-4;
+
+    button,
+    .power-option {
+        @include m3-expressive-transition($dur-med, $m3-spring-bouncy);
+        background-color: $surfaceContainerHigh;
+        color: $onSurface;
+        border: 1px solid rgba($outlineVariant, 0.24);
+        margin: 6px;
+        border-radius: $shape-xl;
+
+        .power-menu-icon {
+            font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons Outlined";
+            font-size: 42pt;
+            color: $primary;
+            @include m3-expressive-transition($dur-med, $m3-spring-bouncy);
+        }
+
+        .power-menu-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: $onSurface;
+        }
+
+        .power-menu-shortcut {
+            font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+            font-size: 10px;
+            font-weight: 700;
+            color: $onSurfaceVariant;
+            background-color: $surfaceContainerHighest;
+            padding: 2px 8px;
+            border-radius: $shape-full;
+        }
+
+        &:hover,
+        &:focus {
+            background-color: $primaryContainer;
+            color: $onPrimaryContainer;
+            border-color: rgba($primary, 0.45);
+            border-radius: 36px;
+            outline: none;
+
+            .power-menu-icon {
+                color: $onPrimaryContainer;
+                font-variation-settings: "FILL" 1;
+            }
+
+            .power-menu-label {
+                color: $onPrimaryContainer;
+            }
+
+            .power-menu-shortcut {
+                background-color: $primary;
+                color: $onPrimary;
+            }
+        }
+
+        &.danger-option:hover,
+        &.danger-option:focus {
+            background-color: $errorContainer;
+            color: $onErrorContainer;
+            border-color: rgba($error, 0.45);
+            .power-menu-icon, .power-menu-label {
+                color: $onErrorContainer;
+            }
+            .power-menu-shortcut {
+                background-color: $error;
+                color: $onError;
+            }
+        }
+
+        &:active {
+            transition-duration: $dur-inst;
+        }
+    }
+}

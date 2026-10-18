@@ -1,0 +1,114 @@
+@use "../colors.scss" as *;
+@use "m3.scss" as *;
+
+
+.notification,
+.notification-popup {
+    @include m3-expressive-transition($dur-med, $m3-spring-default);
+    background-color: $surfaceContainerHigh;
+    color: $onSurface;
+    padding: 12px 14px;
+    border-radius: $shape-lg;
+    border: 1px solid rgba($outlineVariant, 0.3);
+
+    &:hover {
+        background-color: $surfaceContainerHighest;
+    }
+
+    .notification-icon {
+        padding: 10px;
+        background-color: $primaryContainer;
+        color: $onPrimaryContainer;
+        border-radius: $shape-full;
+        @include m3-expressive-transition($dur-fast, $m3-spring-bouncy);
+    }
+
+    .m3-button.notification-close,
+    .m3-button.notification-expand {
+        background-color: $surfaceContainerHighest;
+        padding: 0px;
+        min-width: 26px;
+        min-height: 26px;
+        border-radius: $shape-full;
+
+        &:hover {
+            background-color: $secondaryContainer;
+            .m3-button-icon {
+                color: $onSecondaryContainer;
+            }
+        }
+
+        .m3-button-icon {
+            font-size: 16px;
+            color: $onSurfaceVariant;
+        }
+    }
+
+    .notification-info {
+        padding: 4px 6px 4px 2px;
+
+        .notification-summary {
+            font-weight: 700;
+            font-size: 13px;
+            color: $onSurface;
+        }
+
+        .notification-separator,
+        .notification-seperator,
+        .notification-age {
+            font-size: 11px;
+            font-weight: 600;
+            color: $primary;
+            opacity: 0.85;
+        }
+
+        .notification-body {
+            font-size: 12px;
+            font-weight: 500;
+            color: $onSurfaceVariant;
+        }
+    }
+
+    .notification-actions-container {
+        margin-top: 6px;
+        .notification-action {
+            margin-right: 6px;
+            background-color: $secondaryContainer;
+            color: $onSecondaryContainer;
+            border-radius: $shape-full;
+            padding: 4px 12px;
+            &:hover {
+                background-color: $primary;
+                color: $onPrimary;
+            }
+        }
+    }
+
+    &.compact-popup {
+        padding: 8px 12px;
+        border-radius: $shape-full;
+
+        .notification-icon {
+            padding: 6px;
+            min-width: 28px;
+            min-height: 28px;
+        }
+
+        .m3-button.notification-close {
+            min-width: 24px;
+            min-height: 24px;
+            padding: 0px;
+        }
+    }
+}
+
+.notification-popup-container {
+    margin: 12px;
+    min-width: 380px;
+
+    .notification-popup {
+        background-color: $surfaceContainerLow;
+        border: 1px solid rgba($outlineVariant, 0.45);
+        box-shadow: $elevation-3;
+    }
+}

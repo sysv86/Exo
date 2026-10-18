@@ -1,0 +1,15 @@
+@use "../colors.scss" as *;
+
+.quick-center,
+.quickcenter-surface,
+.launcher-window,
+.launcher-surface,
+.powermenu,
+.osd {
+    background-color: $surfaceContainerLow;
+    border-color: rgba($outlineVariant, 0.55);
+}
+
+.scrim-backdrop {
+    background-color: rgba(0, 0, 0, 0.16);
+}

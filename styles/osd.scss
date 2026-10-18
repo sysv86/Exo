@@ -1,0 +1,71 @@
+@use "../colors.scss" as *;
+@use "m3.scss" as *;
+
+
+.osd {
+    @include m3-expressive-transition($dur-med, $m3-spring-default);
+    background-color: $surfaceContainerLow;
+    border: 1px solid rgba($outlineVariant, 0.4);
+    padding: 12px 18px;
+    border-radius: $shape-full;
+    box-shadow: $elevation-3;
+
+    .osd-icon,
+    .m3-icon {
+        font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons Outlined";
+        font-size: 22px;
+        color: $primary;
+        font-variation-settings: "FILL" 1;
+    }
+
+    .osd-value-label {
+        font-size: 13px;
+        font-weight: 700;
+        color: $onSurface;
+        min-width: 36px;
+        font-feature-settings: "tnum";
+    }
+
+    scale {
+        padding: 0px;
+        opacity: 1;
+
+        trough {
+            @include m3-expressive-transition($dur-fast, $m3-spring-fast);
+            opacity: 1;
+            background-color: $surfaceContainerHighest;
+            border-radius: $shape-md;
+            min-height: 22px;
+            min-width: 180px;
+
+            highlight {
+                @include m3-expressive-transition($dur-fast, $m3-spring-fast);
+                background-color: $primary;
+                min-height: 22px;
+                min-width: 12px;
+                border-radius: $shape-md 6px 6px $shape-md;
+                margin-right: 4px;
+            }
+
+            slider {
+                min-width: 5px;
+                min-height: 24px;
+                background-color: $primary;
+                border-radius: $shape-full;
+                box-shadow: 0 0 0 3px $surfaceContainerLow;
+            }
+        }
+    }
+
+    &.vertical {
+        padding: 18px 12px;
+
+        scale {
+            transform: rotate(180deg);
+            trough {
+                min-width: 22px;
+                min-height: 180px;
+            }
+        }
+    }
+}

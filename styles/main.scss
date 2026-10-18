@@ -1,0 +1,42 @@
+@use "../colors.scss" as *;
+@use "m3.scss" as *;
+@use "bar.scss";
+@use "dock.scss";
+@use "corners.scss";
+@use "settings.scss";
+@use "launcher.scss";
+@use "powermenu.scss";
+@use "quickcenter.scss";
+@use "notifications.scss";
+@use "osd.scss";
+@use "previews.scss";
+
+    outline: unset;
+    border: unset;
+    background: unset;
+    box-shadow: unset;
+    color: unset;
+    border-radius: unset;
+    font-family: "Google Sans Flex", "Inter", "JetBrainsMono Nerd Font", sans-serif;
+    -gtk-secondary-caret-color: $primary;
+}
+
+    outline-color: $secondary;
+}
+
+.monospace-num {
+    font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", "FiraCode Nerd Font", monospace;
+    font-feature-settings: "tnum";
+}
+
+.popup-close,
+.popup-close button,
+.popup-close .background {
+    background-color: transparent;
+}
+
+separator {
+    background-color: $surfaceContainerHighest;
+    min-height: 1px;
+    min-width: 1px;
+}

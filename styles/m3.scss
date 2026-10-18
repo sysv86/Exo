@@ -1,0 +1,795 @@
+@use "../colors.scss" as *;
+
+
+$m3-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1.0);
+$m3-emphasized-accelerate: cubic-bezier(0.3, 0.0, 0.8, 0.15);
+
+$m3-spring-fast:    cubic-bezier(0.34, 1.42, 0.64, 1.0); // (0.6, 800) Fast Spatial
+$m3-spring-default: cubic-bezier(0.22, 1.28, 0.36, 1.0); // (0.8, 380) Default Spatial
+$m3-spring-bouncy:  cubic-bezier(0.28, 1.52, 0.36, 1.0); // Expressive Bouncy
+
+$m3-effects-smooth: cubic-bezier(0.2, 0.0, 0.0, 1.0);
+
+$dur-inst: 85ms;
+$dur-fast: 160ms;
+$dur-med:  250ms;
+$dur-slow: 380ms;
+
+$shape-xs:   8px;
+$shape-sm:   12px;
+$shape-md:   16px;
+$shape-lg:   22px;
+$shape-xl:   26px;
+$shape-2xl:  32px;
+$shape-full: 999px;
+
+$elevation-1: 0px 2px 6px rgba(0, 0, 0, 0.22);
+$elevation-2: 0px 6px 16px rgba(0, 0, 0, 0.28);
+$elevation-3: 0px 12px 28px rgba(0, 0, 0, 0.35);
+$elevation-4: 0px 18px 42px rgba(0, 0, 0, 0.44);
+
+@mixin m3-expressive-transition($spatial-dur: $dur-med, $spring: $m3-spring-fast) {
+    transition:
+        min-width $spatial-dur $spring,
+        min-height $spatial-dur $spring,
+        padding $spatial-dur $spring,
+        margin $spatial-dur $spring,
+        background-color $dur-fast $m3-effects-smooth,
+        color $dur-fast $m3-effects-smooth,
+        opacity $dur-fast $m3-effects-smooth,
+        box-shadow $dur-fast $m3-effects-smooth,
+        border-color $dur-fast $m3-effects-smooth;
+}
+
+.m3-testing-window {
+    background-color: $background;
+    color: $onSurface;
+}
+
+.m3-icon,
+.material-symbols {
+    font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons Outlined";
+}
+
+
+.m3-shape-badge {
+    color: $primary;
+    transition: color $dur-fast $m3-effects-smooth;
+}
+
+.m3-loading-indicator {
+    color: $primary;
+
+    &.contained {
+        background-color: $primaryContainer;
+        color: $onPrimaryContainer;
+        border-radius: $shape-full;
+        padding: 4px;
+    }
+}
+
+.m3-studio-header-card,
+.m3-studio-shape-card {
+    background-color: $surfaceContainerLow;
+    border: 1px solid rgba($outlineVariant, 0.32);
+    border-radius: $shape-lg;
+    padding: 14px 16px;
+}
+
+.m3-studio-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: $onSurface;
+}
+
+.m3-studio-bench {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: $primary;
+}
+
+.m3-studio-chip {
+    background-color: $secondaryContainer;
+    color: $onSecondaryContainer;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 10px;
+    border-radius: $shape-full;
+}
+
+// --- REVEALER WINDOW TRANSITIONS ---
+.exo-revealer-window {
+    .panel-surface,
+    .launcher-surface,
+    .launcher-window,
+    .quickcenter-surface,
+    .quick-center,
+    .powermenu,
+    .osd {
+        opacity: 0;
+        transition: opacity $dur-inst $m3-effects-smooth;
+    }
+
+    &.is-open {
+        .panel-surface,
+        .launcher-surface,
+        .launcher-window,
+        .quickcenter-surface,
+        .quick-center,
+        .powermenu,
+        .osd {
+            opacity: 1;
+            transition: opacity $dur-fast $m3-effects-smooth;
+        }
+    }
+}
+
+.scrim-backdrop {
+    background-color: rgba(0, 0, 0, 0.30);
+    transition: background-color $dur-fast $m3-effects-smooth;
+}
+
+
+.m3-button {
+    @include m3-expressive-transition($dur-med, $m3-spring-fast);
+    border-radius: $shape-full;
+    padding: 8px 18px;
+    font-weight: 600;
+    font-size: 13px;
+    color: $onSurface;
+    background-color: $surfaceContainerHigh;
+
+    label {
+        font-weight: 600;
+        transition: color $dur-fast $m3-effects-smooth;
+    }
+
+    .m3-button-icon {
+        font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons Outlined";
+        transition: color $dur-fast $m3-effects-smooth;
+    }
+
+    .m3-button-label {
+        color: inherit;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $primary;
+        outline-offset: 2px;
+    }
+
+    &.filled {
+        background-color: $primary;
+        color: $onPrimary;
+        label, .m3-button-icon, .m3-button-label {
+            color: $onPrimary;
+        }
+        &:hover {
+            background-color: mix($onPrimary, $primary, 12%);
+        }
+    }
+
+    &.tonal {
+        background-color: $secondaryContainer;
+        color: $onSecondaryContainer;
+        label, .m3-button-icon, .m3-button-label {
+            color: $onSecondaryContainer;
+        }
+        &:hover {
+            background-color: mix($onSecondaryContainer, $secondaryContainer, 12%);
+        }
+    }
+
+    &.surface {
+        background-color: $surfaceContainerHigh;
+        color: $onSurface;
+        border: 1px solid rgba($outlineVariant, 0.22);
+        label, .m3-button-icon, .m3-button-label {
+            color: $onSurface;
+        }
+        &:hover {
+            background-color: $surfaceContainerHighest;
+            border-color: rgba($primary, 0.35);
+        }
+    }
+
+    &.elevated {
+        background-color: $surfaceContainerLow;
+        border: 1px solid rgba($outlineVariant, 0.28);
+        box-shadow: $elevation-1;
+        color: $primary;
+        label, .m3-button-icon, .m3-button-label {
+            color: $primary;
+        }
+        &:hover {
+            background-color: $surfaceContainerHigh;
+            box-shadow: $elevation-2;
+        }
+    }
+
+    &.outlined {
+        background-color: transparent;
+        border: 1px solid $outlineVariant;
+        color: $onSurfaceVariant;
+        label, .m3-button-icon, .m3-button-label {
+            color: $onSurfaceVariant;
+        }
+        &:hover {
+            background-color: rgba($onSurface, 0.08);
+            border-color: $primary;
+        }
+    }
+
+    &.text {
+        background-color: transparent;
+        color: $primary;
+        label, .m3-button-icon, .m3-button-label {
+            color: $primary;
+        }
+        &:hover {
+            background-color: rgba($primary, 0.12);
+        }
+    }
+
+    &.danger {
+        background-color: $errorContainer;
+        color: $onErrorContainer;
+        label, .m3-button-icon, .m3-button-label {
+            color: $onErrorContainer;
+        }
+        &:hover {
+            background-color: $error;
+            color: $onError;
+            label, .m3-button-icon, .m3-button-label {
+                color: $onError;
+            }
+        }
+    }
+
+    &.xs {
+        min-height: 30px;
+        padding: 0px 12px;
+        .m3-button-icon { font-size: 16px; }
+        .m3-button-label { font-size: 11.5px; }
+        &.square { border-radius: $shape-xs; }
+        &.icon-only {
+            padding: 0px 6px;
+            min-width: 30px;
+            min-height: 30px;
+        }
+    }
+
+    &.s {
+        min-height: 38px;
+        padding: 0px 16px;
+        .m3-button-icon { font-size: 19px; }
+        .m3-button-label { font-size: 13px; }
+        &.square { border-radius: $shape-sm; }
+        &.icon-only {
+            padding: 0px 9px;
+            min-width: 38px;
+            min-height: 38px;
+        }
+    }
+
+    &.m {
+        min-height: 48px;
+        padding: 0px 22px;
+        .m3-button-icon { font-size: 22px; }
+        .m3-button-label { font-size: 14px; }
+        &.square { border-radius: $shape-md; }
+        &.icon-only {
+            padding: 0px 13px;
+            min-width: 48px;
+            min-height: 48px;
+        }
+    }
+
+    &.l {
+        min-height: 64px;
+        padding: 0px 32px;
+        .m3-button-icon { font-size: 26px; }
+        .m3-button-label { font-size: 17px; }
+        &.square { border-radius: $shape-lg; }
+        &.icon-only {
+            padding: 0px 20px;
+            min-width: 64px;
+            min-height: 64px;
+        }
+    }
+
+    &.xl {
+        min-height: 84px;
+        padding: 0px 42px;
+        .m3-button-icon { font-size: 32px; }
+        .m3-button-label { font-size: 20px; }
+        &.square { border-radius: $shape-xl; }
+        &.icon-only {
+            padding: 0px 26px;
+            min-width: 84px;
+            min-height: 84px;
+        }
+    }
+
+    &.icon-only {
+        padding: 7px;
+        min-width: 22px;
+        min-height: 22px;
+        .m3-button-icon {
+            font-variation-settings: "FILL" 1;
+        }
+    }
+
+    &.round {
+        border-radius: $shape-full;
+    }
+
+    &.active,
+    &:checked {
+        background-color: $primary;
+        color: $onPrimary;
+        label, .m3-button-icon, .m3-button-label {
+            color: $onPrimary;
+        }
+    }
+}
+
+.m3-button.m3-morphed {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+
+    .m3-pad {
+        padding: 8px 18px;
+    }
+
+    &.icon-only .m3-pad { padding: 7px; }
+    &.xs.icon-only .m3-pad { padding: 0 6px; }
+    &.s.icon-only .m3-pad { padding: 0 9px; }
+    &.m.icon-only .m3-pad { padding: 0 13px; }
+    &.l.icon-only .m3-pad { padding: 0 20px; }
+    &.xl.icon-only .m3-pad { padding: 0 26px; }
+
+    &:hover,
+    &:active,
+    &.active,
+    &:checked {
+        background-color: transparent;
+    }
+}
+
+.connected-button-group {
+    background-color: $surfaceContainerLowest;
+    padding: 3px;
+    border-radius: $shape-full;
+    border: 1px solid rgba($outlineVariant, 0.26);
+
+    .m3-button {
+        @include m3-expressive-transition($dur-med, $m3-spring-fast);
+        border-radius: 6px;
+        background-color: $surfaceContainerHigh;
+        color: $onSurfaceVariant;
+        min-width: 28px;
+        border: none;
+
+        &:hover:not(.active) {
+            background-color: $surfaceContainerHighest;
+            color: $onSurface;
+        }
+
+        &.active {
+            background-color: $primary;
+            color: $onPrimary;
+            .m3-button-icon {
+                color: $onPrimary;
+                font-variation-settings: "FILL" 1;
+            }
+            label, .m3-button-label {
+                color: $onPrimary;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .m3-button.m3-morphed {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+
+        &:hover:not(.active),
+        &:active,
+        &.active,
+        &:checked {
+            background-color: transparent;
+        }
+
+        .m3-pad {
+            padding: 8px 16px;
+        }
+    }
+}
+
+.m3-split-button {
+    .m3-split-leading {
+        padding: 0;
+        .m3-pad {
+            padding: 8px 14px 8px 18px;
+        }
+    }
+
+    .m3-split-trailing {
+        min-width: 36px;
+        padding: 0;
+
+        .m3-pad {
+            padding: 0 8px;
+        }
+    }
+
+    .m3-button.open {
+        color: $onTertiaryContainer;
+        .m3-button-icon,
+        .m3-button-label,
+        label {
+            color: $onTertiaryContainer;
+        }
+    }
+}
+
+.m3-floating-toolbar {
+    padding: 4px 8px;
+    border-radius: $shape-full;
+    border: 1px solid rgba($outlineVariant, 0.35);
+    box-shadow: $elevation-2;
+    background-color: $surfaceContainerHigh;
+
+    &.vibrant {
+        background-color: $primaryContainer;
+        color: $onPrimaryContainer;
+    }
+
+    .m3-toolbar-sep {
+        margin: 4px 2px;
+        background-color: rgba($outlineVariant, 0.45);
+    }
+}
+
+switch,
+switch.m3-switch {
+    @include m3-expressive-transition($dur-med, $m3-spring-bouncy);
+    min-width: 52px;
+    min-height: 32px;
+    padding: 4px;
+    border: none;
+    border-radius: $shape-full;
+    background-color: $surfaceContainerHighest;
+
+    slider {
+        @include m3-expressive-transition($dur-med, $m3-spring-bouncy);
+        min-width: 16px;
+        min-height: 16px;
+        margin: 4px;
+        border-radius: $shape-full;
+        background-color: $outline;
+        box-shadow: none;
+    }
+
+    &:hover {
+        background-color: mix($onSurface, $surfaceContainerHighest, 8%);
+        slider {
+            min-width: 18px;
+            min-height: 18px;
+            margin: 3px;
+        }
+    }
+
+    &:active slider {
+        min-width: 26px;
+        min-height: 20px;
+        margin: 2px;
+    }
+
+    &:checked {
+        background-color: $primary;
+
+        slider {
+            min-width: 24px;
+            min-height: 24px;
+            margin: 0;
+            background-color: $onPrimary;
+        }
+
+        &:hover {
+            background-color: mix($onPrimary, $primary, 10%);
+        }
+
+        &:active slider {
+            min-width: 28px;
+            min-height: 24px;
+            margin: 0;
+        }
+    }
+}
+
+scale.m3-expressive-slider {
+    min-height: 36px;
+    padding: 4px 0;
+
+    trough {
+        @include m3-expressive-transition($dur-fast, $m3-spring-fast);
+        min-height: 22px;
+        border-radius: $shape-sm;
+        background-color: $surfaceContainerHighest;
+
+        highlight {
+            background-color: $primary;
+            border-radius: $shape-sm 4px 4px $shape-sm;
+            margin-right: 4px;
+            min-height: 22px;
+        }
+
+        slider {
+            @include m3-expressive-transition($dur-fast, $m3-spring-bouncy);
+            min-width: 5px;
+            min-height: 26px;
+            background-color: $primary;
+            border-radius: $shape-full;
+            margin: -3px 0;
+            box-shadow: 0 0 0 3px $surfaceContainerLow;
+        }
+    }
+
+    &:hover trough {
+        slider {
+            min-height: 30px;
+            min-width: 6px;
+            background-color: $primaryFixed;
+        }
+    }
+
+    &:active trough slider {
+        min-height: 32px;
+        min-width: 4px;
+        background-color: $onPrimaryContainer;
+    }
+}
+
+.m3-slider {
+    @include m3-expressive-transition($dur-fast, $m3-spring-fast);
+    background-color: $surfaceContainer;
+    border-radius: $shape-lg;
+    padding: 10px 14px;
+    border: 1px solid rgba($outlineVariant, 0.24);
+
+    .m3-icon,
+    .m3-slider-icon {
+        font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons Outlined";
+        font-size: 20px;
+        color: $primary;
+    }
+
+    scale {
+        padding: 2px 0;
+        trough {
+            @include m3-expressive-transition($dur-fast, $m3-spring-fast);
+            background-color: $surfaceContainerHighest;
+            border-radius: $shape-sm;
+            min-height: 22px;
+
+            highlight {
+                background-color: $primary;
+                min-height: 22px;
+                border-radius: $shape-sm 4px 4px $shape-sm;
+                margin-right: 4px;
+            }
+
+            slider {
+                @include m3-expressive-transition($dur-fast, $m3-spring-bouncy);
+                min-height: 26px;
+                min-width: 5px;
+                padding: 0px;
+                margin: -2px 0;
+                border-radius: $shape-full;
+                background-color: $primary;
+                box-shadow: 0 0 0 3px $surfaceContainer;
+            }
+        }
+    }
+}
+
+.navigation-rail {
+    padding: 12px 10px;
+    background-color: $surfaceContainerLow;
+    border-radius: $shape-xl;
+    margin: 8px;
+    border: 1px solid rgba($outlineVariant, 0.25);
+
+    .rail-button {
+        @include m3-expressive-transition($dur-fast, $m3-spring-fast);
+        background-color: transparent;
+        padding: 6px 4px;
+        border-radius: $shape-md;
+
+        .m3-button-icon {
+            @include m3-expressive-transition($dur-med, $m3-spring-bouncy);
+            border-radius: $shape-full;
+            padding: 4px 18px;
+            margin: 0px 0px 2px 0px;
+            color: $onSurfaceVariant;
+            font-size: 20px;
+        }
+
+        .m3-button-label {
+            color: $onSurfaceVariant;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        &:hover,
+        &:focus-visible {
+            background-color: transparent;
+            outline: none;
+            .m3-button-icon {
+                background-color: rgba($secondaryContainer, 0.55);
+                color: $onSurface;
+                border-radius: $shape-sm;
+            }
+        }
+
+        &.selected {
+            .m3-button-icon {
+                background-color: $secondaryContainer;
+                color: $onSecondaryContainer;
+                border-radius: $shape-md;
+                font-variation-settings: "FILL" 1;
+            }
+            .m3-button-label {
+                color: $onSurface;
+                font-weight: 700;
+            }
+        }
+    }
+
+    .reload-button {
+        min-height: 52px;
+        border-radius: $shape-lg;
+    }
+}
+
+spinbutton {
+    background-color: $surfaceContainerHigh;
+    border-radius: $shape-full;
+    padding: 2px 6px;
+
+    text {
+        border-radius: $shape-full;
+        background-color: transparent;
+        color: $onSurface;
+        font-weight: 600;
+        padding: 4px 8px;
+    }
+
+    button {
+        @include m3-expressive-transition($dur-fast, $m3-spring-fast);
+        border: none;
+        background-color: $surfaceContainerHighest;
+        color: $onSurface;
+        margin: 2px;
+        min-width: 26px;
+        min-height: 26px;
+        border-radius: $shape-full;
+
+        &:hover {
+            background-color: $secondaryContainer;
+            color: $onSecondaryContainer;
+        }
+    }
+}
+
+popover {
+    contents {
+        background-color: $surfaceContainerHigh;
+        border: 1px solid rgba($outlineVariant, 0.4);
+        padding: 6px;
+        border-radius: $shape-lg;
+        box-shadow: $elevation-3;
+
+        box {
+            background-color: transparent;
+            & > label {
+                color: $onSurfaceVariant;
+            }
+            modelbutton {
+                @include m3-expressive-transition($dur-fast, $m3-spring-fast);
+                background-color: transparent;
+                border-radius: $shape-sm;
+                padding: 6px 12px;
+                min-width: 120px;
+
+                &:hover {
+                    background-color: $secondaryContainer;
+                    color: $onSecondaryContainer;
+                }
+            }
+        }
+
+        label {
+            font-weight: 500;
+            color: $onSurface;
+        }
+    }
+    arrow {
+        background-color: transparent;
+    }
+}
+
+tooltip {
+    border-radius: $shape-sm;
+    background-color: $surfaceContainerHighest;
+    color: $onSurface;
+    border: 1px solid rgba($outlineVariant, 0.45);
+    padding: 6px 12px;
+    box-shadow: $elevation-2;
+
+    label {
+        font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+        color: $onSurface;
+        font-weight: 600;
+        font-size: 11.5px;
+    }
+}
+
+checkbutton {
+    check,
+    radio {
+        @include m3-expressive-transition($dur-fast, $m3-spring-bouncy);
+        min-width: 18px;
+        min-height: 18px;
+        border-radius: 6px;
+        background-color: transparent;
+        box-shadow: inset 0px 0px 0px 2px $outline;
+        margin-right: 8px;
+
+        &:hover {
+            background-color: $surfaceContainerHighest;
+        }
+
+        &:checked {
+            background-color: $primary;
+            color: $onPrimary;
+            box-shadow: none;
+            border-radius: 8px;
+        }
+    }
+    radio {
+        border-radius: $shape-full;
+        &:checked {
+            border-radius: $shape-full;
+        }
+    }
+}
+
+scrollbar {
+    background-color: transparent;
+
+    slider {
+        @include m3-expressive-transition($dur-fast, $m3-spring-fast);
+        background-color: rgba($onSurfaceVariant, 0.35);
+        border-radius: $shape-full;
+        min-width: 6px;
+        min-height: 6px;
+        margin: 2px;
+
+        &:hover {
+            background-color: $primary;
+        }
+    }
+
+    &.vertical slider {
+        min-height: 24px;
+    }
+
+    &.horizontal slider {
+        min-width: 24px;
+    }
+}

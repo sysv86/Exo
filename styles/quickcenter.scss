@@ -1,0 +1,396 @@
+@use "../colors.scss" as *;
+@use "m3.scss" as *;
+
+
+.quickcenter-surface,
+.quick-center {
+    background-color: rgba($surfaceContainerLowest, 0.96);
+    color: $onSurface;
+    border-radius: $shape-xl;
+    padding: 16px;
+    min-width: 410px;
+    margin: 8px;
+    border: 1px solid rgba($outlineVariant, 0.38);
+    box-shadow: $elevation-4;
+    @include m3-expressive-transition($dur-slow, $m3-spring-default);
+}
+
+.qs-header {
+    padding: 2px 4px 4px 4px;
+
+    .qs-header-shape {
+        color: $primary;
+    }
+
+    .qs-header-title {
+        font-size: 16.5px;
+        font-weight: 800;
+        color: $onSurface;
+        margin-left: 2px;
+    }
+
+    .qs-status-chip {
+        background-color: $secondaryContainer;
+        color: $onSecondaryContainer;
+        font-size: 10.5px;
+        font-weight: 800;
+        padding: 3px 10px;
+        border-radius: $shape-full;
+    }
+}
+
+.qs-telemetry-island {
+    background-color: $surfaceContainerLow;
+    border: 1px solid rgba($outlineVariant, 0.28);
+    border-radius: $shape-lg;
+    padding: 10px 12px;
+
+    .qs-tel-cell {
+        background-color: $surfaceContainer;
+        border: 1px solid rgba($outlineVariant, 0.18);
+        border-radius: $shape-sm;
+        padding: 8px 10px;
+    }
+
+    .qs-tel-icon {
+        font-size: 16px;
+        color: $primary;
+    }
+
+    .qs-tel-title {
+        font-size: 10.5px;
+        font-weight: 800;
+        letter-spacing: 0.4px;
+        color: $onSurfaceVariant;
+    }
+
+    .qs-tel-val {
+        font-size: 11px;
+        font-weight: 700;
+        color: $onSurface;
+    }
+
+    .qs-tel-bar {
+        trough {
+            min-height: 6px;
+            border-radius: $shape-full;
+            background-color: $surfaceContainerHighest;
+
+            progress {
+                min-height: 6px;
+                border-radius: $shape-full;
+                background-color: $primary;
+            }
+        }
+
+        &.ram trough progress {
+            background-color: $tertiary;
+        }
+    }
+
+    .qs-tel-footer {
+        padding: 2px 4px 0 4px;
+    }
+}
+
+.qs-split-tile {
+    @include m3-expressive-transition($dur-med, $m3-spring-fast);
+    background-color: $surfaceContainerHigh;
+    color: $onSurface;
+    border: 1px solid rgba($outlineVariant, 0.24);
+    border-radius: $shape-full;
+    min-height: 56px;
+
+    .qs-tile-main {
+        @include m3-expressive-transition($dur-fast, $m3-spring-fast);
+        background-color: transparent;
+        color: inherit;
+        padding: 9px 14px;
+        border-radius: $shape-full 0 0 $shape-full;
+
+        &:hover {
+            background-color: rgba($onSurface, 0.08);
+        }
+
+        &:active {
+            transition-duration: $dur-inst;
+        }
+
+        &.full-tile {
+            border-radius: $shape-full;
+        }
+    }
+
+    .qs-tile-chevron {
+        @include m3-expressive-transition($dur-fast, $m3-spring-bouncy);
+        background-color: transparent;
+        color: inherit;
+        padding: 0 11px;
+        border-left: 1px solid rgba($outlineVariant, 0.35);
+        border-radius: 0 $shape-full $shape-full 0;
+
+        .chevron-glyph {
+            font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons Outlined";
+            font-size: 18px;
+        }
+
+        &:hover {
+            background-color: rgba($onSurface, 0.12);
+        }
+    }
+
+    .qs-tile-icon,
+    .qs-tile-glyph {
+        font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons Outlined";
+        font-size: 20px;
+        color: $primary;
+    }
+
+    .qs-tile-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: inherit;
+    }
+
+    .qs-tile-sub {
+        font-size: 11px;
+        font-weight: 500;
+        opacity: 0.80;
+        color: inherit;
+    }
+
+    &:hover:not(.active) {
+        background-color: $surfaceContainerHighest;
+    }
+
+    &.active {
+        background-color: $primaryContainer;
+        color: $onPrimaryContainer;
+        border-color: transparent;
+        border-radius: $shape-md;
+
+        .qs-tile-icon,
+        .qs-tile-glyph {
+            color: $onPrimaryContainer;
+            font-variation-settings: "FILL" 1;
+        }
+
+        .qs-tile-main {
+            border-radius: $shape-md 0 0 $shape-md;
+            &:hover { background-color: rgba($onPrimaryContainer, 0.08); }
+            &.full-tile { border-radius: $shape-md; }
+        }
+
+        .qs-tile-chevron {
+            border-left-color: rgba($onPrimaryContainer, 0.22);
+            border-radius: 0 $shape-md $shape-md 0;
+            &:hover { background-color: rgba($onPrimaryContainer, 0.14); }
+        }
+    }
+
+    &.expanded {
+        border-radius: $shape-sm;
+        .qs-tile-chevron {
+            background-color: $tertiaryContainer;
+            color: $onTertiaryContainer;
+        }
+    }
+}
+
+.qs-accordion-box {
+    background-color: $surfaceContainer;
+    border-radius: $shape-lg;
+    padding: 12px;
+    margin-top: 2px;
+    border: 1px solid rgba($outlineVariant, 0.32);
+
+    .qs-sub-header-row {
+        margin-bottom: 6px;
+    }
+
+    .qs-sub-header {
+        font-size: 11px;
+        font-weight: 800;
+        color: $primary;
+        margin: 2px 6px;
+        text-transform: uppercase;
+    }
+
+    .qs-sub-action {
+        @include m3-expressive-transition($dur-fast, $m3-spring-fast);
+        background-color: $surfaceContainerHigh;
+        color: $onSurface;
+        border-radius: $shape-full;
+        padding: 4px 10px;
+        font-size: 11px;
+        font-weight: 700;
+
+        &:hover {
+            background-color: $primary;
+            color: $onPrimary;
+        }
+    }
+
+    .qs-sub-item {
+        @include m3-expressive-transition($dur-fast, $m3-spring-fast);
+        background-color: $surfaceContainerLow;
+        padding: 8px 12px;
+        border-radius: $shape-sm;
+        color: $onSurface;
+
+        .sub-item-glyph {
+            font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons Outlined";
+            font-size: 18px;
+            color: $onSurfaceVariant;
+        }
+
+        .qs-sub-status {
+            font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+            font-size: 10.5px;
+            font-weight: 700;
+            color: $onSurfaceVariant;
+            background-color: $surfaceContainerHighest;
+            padding: 2px 8px;
+            border-radius: $shape-full;
+        }
+
+        &:hover {
+            background-color: $surfaceContainerHigh;
+            padding-left: 16px;
+        }
+
+        &.active {
+            background-color: $secondaryContainer;
+            color: $onSecondaryContainer;
+            border-radius: $shape-md;
+            font-weight: 700;
+
+            .sub-item-glyph {
+                color: $onSecondaryContainer;
+            }
+
+            .qs-sub-status {
+                background-color: $primary;
+                color: $onPrimary;
+            }
+        }
+    }
+}
+
+.qs-sliders-island,
+.quick-sliders-container {
+    background-color: $surfaceContainerLow;
+    border: 1px solid rgba($outlineVariant, 0.26);
+    border-radius: $shape-lg;
+    padding: 10px 12px;
+
+    .qs-slider-row {
+        padding: 2px 0;
+
+        .qs-slider-badge {
+            min-width: 40px;
+            font-size: 11px;
+            font-weight: 700;
+            color: $onSurfaceVariant;
+            font-feature-settings: "tnum";
+        }
+    }
+}
+
+.qs-media-card {
+    background-color: $surfaceContainerLow;
+    border-radius: $shape-lg;
+    padding: 10px 12px;
+    border: 1px solid rgba($outlineVariant, 0.28);
+
+    .qs-media-art {
+        border-radius: $shape-sm;
+        background-color: $surfaceContainerHighest;
+        min-width: 42px;
+        min-height: 42px;
+    }
+
+    .qs-media-title {
+        font-size: 13px;
+        font-weight: 700;
+        color: $onSurface;
+    }
+
+    .qs-media-artist {
+        font-size: 11px;
+        font-weight: 500;
+        color: $onSurfaceVariant;
+    }
+
+    .qs-media-progress trough {
+        min-height: 5px;
+        border-radius: $shape-full;
+        background-color: $surfaceContainerHighest;
+
+        progress {
+            min-height: 5px;
+            border-radius: $shape-full;
+            background-color: $primary;
+        }
+    }
+
+    .qs-media-time {
+        font-size: 10.5px;
+        font-weight: 600;
+        color: $onSurfaceVariant;
+    }
+}
+
+.notification-center {
+    background-color: $surfaceContainerLow;
+    border: 1px solid rgba($outlineVariant, 0.26);
+    padding: 12px;
+    border-radius: $shape-lg;
+    min-height: 170px;
+
+    .notification-center-header {
+        margin-bottom: 6px;
+        .nc-title {
+            font-size: 11.5px;
+            font-weight: 800;
+            color: $onSurfaceVariant;
+            text-transform: uppercase;
+        }
+        .nc-count-badge {
+            font-family: "JetBrainsMono Nerd Font", "JetBrains Mono", monospace;
+            background-color: $primaryContainer;
+            color: $onPrimaryContainer;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: $shape-full;
+        }
+    }
+
+    scrolledwindow viewport {
+        border-radius: $shape-md;
+    }
+
+    .notification-center-info-icon {
+        font-family: "Material Symbols Rounded", "Material Symbols Outlined", "Material Icons Outlined";
+        font-size: 28px;
+        color: $outline;
+        margin-bottom: 4px;
+    }
+
+    .notification-center-info-label {
+        font-weight: 600;
+        font-size: 13px;
+        color: $onSurfaceVariant;
+    }
+
+    .notification-center-content {
+        revealer {
+            .notification {
+                border-radius: $shape-md;
+                background-color: $surfaceContainerHigh;
+                margin-bottom: 4px;
+            }
+        }
+    }
+}
